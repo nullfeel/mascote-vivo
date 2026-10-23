@@ -39,19 +39,58 @@ export function darVida(svg: SVGSVGElement, opcoes: Opcoes = {}): Controle {
     limpar.push(() => alvo.removeEventListener(tipo, fn));
   };
 
+  const corpo = svg.querySelector(".corpo") ?? svg;
+  let emCima = false, timer = 0;
+  limpar.push(() => clearTimeout(timer));
+  const fimDaFesta = () => { if (!emCima) svg.classList.remove("mv-feliz"); };
+
   const controle: Controle = {
-    comemorar() {},
+    comemorar() {
+      svg.classList.add("mv-feliz");
+      if (reduzido || !gsap) {
+        clearTimeout(timer);
+        timer = window.setTimeout(fimDaFesta, 1500);
+        return;
+      }
+      gsap.killTweensOf(corpo);
+      gsap.to(corpo, { y: -10, rotation: 5, duration: 0.18, ease: "sine.inOut", yoyo: true, repeat: 3, transformOrigin: "50% 100%", onComplete: fimDaFesta });
+    },
     parar() {
       limpar.forEach((fn) => fn());
       limpar.length = 0;
+      svg.classList.remove("mv-feliz");
       vivos.delete(svg);
     },
   };
   vivos.set(svg, controle);
-  if (reduzido || !gsap) return controle;
 
-  const corpo = svg.querySelector(".corpo") ?? svg;
+  // Comemorar no botão: mouse em cima, foco do teclado ou clique (no celular é o toque).
+  const alvo = opcoes.comemorarEm ? document.querySelector(opcoes.comemorarEm) : null;
+  if (alvo) {
+    const entrar = () => { emCima = true; controle.comemorar(); };
+    const sair = () => { emCima = false; svg.classList.remove("mv-feliz"); };
+    ouvir(alvo, "pointerenter", entrar);
+    ouvir(alvo, "focus", entrar);
+    ouvir(alvo, "pointerleave", sair);
+    ouvir(alvo, "blur", sair);
+    ouvir(alvo, "click", () => controle.comemorar());
+  }
+
+  if (reduzido || !gsap) return controle;
   limpar.push(() => gsap.killTweensOf(corpo));
+
+  // Piscar: as pálpebras ficam recolhidas no topo e descem rapidinho, em intervalos aleatórios.
+  const palpebras = Array.from(svg.querySelectorAll(".palpebra"));
+  if (palpebras.length) {
+    gsap.set(palpebras, { scaleY: 0, transformOrigin: "50% 0%" });
+    let piscada = 0;
+    const piscar = () => {
+      gsap.to(palpebras, { scaleY: 1, duration: 0.08, yoyo: true, repeat: 1 });
+      piscada = window.setTimeout(piscar, 2000 + Math.random() * 4000);
+    };
+    piscada = window.setTimeout(piscar, 2000 + Math.random() * 4000);
+    limpar.push(() => { clearTimeout(piscada); gsap.killTweensOf(palpebras); });
+  }
 
   // Olhar: só mouse; no toque não há ponteiro para seguir.
   const pupilas = Array.from(svg.querySelectorAll<SVGGElement>(".pp"));
