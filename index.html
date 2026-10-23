@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mascote-vivo · dê vida ao seu mascote</title>
+  <meta name="description" content="Biblioteca pequena que faz mascotes em SVG olharem para o mouse, piscarem, pularem e comemorarem.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect x=%228%22 y=%2214%22 width=%2284%22 height=%2280%22 rx=%2236%22 fill=%22%23b07a52%22/%3E%3Ccircle cx=%2250%22 cy=%2212%22 r=%2210%22 fill=%22%23ff9b3d%22/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <header class="topo">
+    <span class="marca">mascote-vivo</span>
+    <a href="https://github.com/nullfeel/mascote-vivo">Ver no GitHub</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-texto">
+        <h1>Dê vida ao seu mascote</h1>
+        <p>Uma biblioteca pequena que faz mascotes em SVG <strong>olharem para o mouse</strong>, <strong>piscarem</strong>, <strong>pularem</strong> e <strong>comemorarem</strong>.</p>
+        <div class="acoes">
+          <button id="botao-comemorar" class="botao">Comemorar!</button>
+          <a class="botao secundario" href="#como-usar">Como usar</a>
+        </div>
+        <p class="dica">Mexa o mouse pela página e clique na capivara.</p>
+      </div>
+
+      <div class="palco">
+        <svg id="capivara" viewBox="0 0 200 200" role="img" aria-label="Capivara mascote">
+          <ellipse cx="100" cy="190" rx="62" ry="7" fill="#3b2516" opacity=".15"/>
+          <g class="corpo">
+            <ellipse cx="58" cy="54" rx="13" ry="11" fill="#8a5a3b"/>
+            <ellipse cx="142" cy="54" rx="13" ry="11" fill="#8a5a3b"/>
+            <ellipse cx="58" cy="55" rx="6" ry="5" fill="#6e4630"/>
+            <ellipse cx="142" cy="55" rx="6" ry="5" fill="#6e4630"/>
+            <rect x="30" y="46" width="140" height="138" rx="60" fill="#b07a52"/>
+            <ellipse cx="100" cy="76" rx="52" ry="22" fill="#c4915f" opacity=".6"/>
+            <!-- a laranja na cabeça, clássico das capivaras -->
+            <circle cx="100" cy="42" r="15" fill="#ff9b3d"/>
+            <circle cx="95" cy="37" r="4" fill="#fff" opacity=".45"/>
+            <path d="M100 28 q8 -10 16 -6 q-6 8 -16 6z" fill="#2f8f83"/>
+            <ellipse cx="50" cy="118" rx="11" ry="7" fill="#ff9e9e" opacity=".6"/>
+            <ellipse cx="150" cy="118" rx="11" ry="7" fill="#ff9e9e" opacity=".6"/>
+            <rect x="54" y="112" width="92" height="62" rx="31" fill="#8a5a3b"/>
+            <ellipse cx="82" cy="130" rx="6" ry="4" fill="#3b2516"/>
+            <ellipse cx="118" cy="130" rx="6" ry="4" fill="#3b2516"/>
+            <path class="boca" d="M88 152 Q100 160 112 152" stroke="#3b2516" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <g class="boca-feliz">
+              <path d="M84 147 Q100 172 116 147 Z" fill="#4a2416"/>
+              <ellipse cx="100" cy="160" rx="7" ry="4" fill="#ff8f8f"/>
+            </g>
+            <circle cx="73" cy="90" r="15" fill="#fff"/>
+            <circle cx="127" cy="90" r="15" fill="#fff"/>
+            <g class="pp">
+              <circle cx="73" cy="90" r="7.5" fill="#2a1a10"/>
+              <circle cx="127" cy="90" r="7.5" fill="#2a1a10"/>
+              <circle cx="76" cy="87" r="2.5" fill="#fff"/>
+              <circle cx="130" cy="87" r="2.5" fill="#fff"/>
+            </g>
+            <g class="palpebra">
+              <ellipse cx="73" cy="90" rx="16.5" ry="16.5" fill="#b07a52"/>
+              <ellipse cx="127" cy="90" rx="16.5" ry="16.5" fill="#b07a52"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="faz">
+      <h2>O que ela faz</h2>
+      <ul class="cartoes">
+        <li><b>Olha</b>As pupilas seguem o mouse.</li>
+        <li><b>Pisca</b>Sozinha, em intervalos aleatórios.</li>
+        <li><b>Pula</b>Quando alguém clica ou toca nela.</li>
+        <li><b>Comemora</b>Quando o mouse passa no botão, ele recebe foco ou é tocado.</li>
+      </ul>
+      <p class="nota">Quem pediu menos movimento no computador vê o mascote parado; no lugar da comemoração, ele só abre um sorriso.</p>
+    </section>
+
+    <section id="como-usar" class="usar">
+      <h2>Como usar no seu site</h2>
+      <p><b>1.</b> No seu SVG, marque as partes com classes: <code>pp</code> nas pupilas, <code>palpebra</code> nas pálpebras e <code>corpo</code> no que deve pular.</p>
+      <p><b>2.</b> Carregue o GSAP e chame <code>darVida</code>:</p>
+<pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"&gt;&lt;/script&gt;
+&lt;script type="module"&gt;
+  import { darVida } from "https://cdn.jsdelivr.net/gh/nullfeel/mascote-vivo@v0.1.0/dist/mascote-vivo.js";
+
+  darVida(document.querySelector("#meu-mascote"), { comemorarEm: "#meu-botao" });
+&lt;/script&gt;</code></pre>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    Feito por <a href="https://github.com/nullfeel">Marcos Alan</a>. Nasceu das animações que fiz para a <a href="https://estudeprumo.com">Prumo</a>. Licença MIT.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script type="module">
+    import { darVida } from "./dist/mascote-vivo.js";
+    darVida(document.querySelector("#capivara"), { comemorarEm: "#botao-comemorar", maxOlhar: 5 });
+  </script>
+</body>
+</html>

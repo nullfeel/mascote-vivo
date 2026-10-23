@@ -1,0 +1,96 @@
+:root {
+  --fundo: #fff8ee;
+  --areia: #f6e7cf;
+  --texto: #3b2516;
+  --suave: #7a5a44;
+  --lago: #2f8f83;
+  --lago-escuro: #236e65;
+  --laranja: #ff9b3d;
+  --cartao: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 17px/1.6 "Nunito", system-ui, sans-serif;
+}
+
+h1, h2, .marca { font-family: "Baloo 2", system-ui, sans-serif; line-height: 1.1; }
+a { color: var(--lago-escuro); }
+
+.topo, main, .rodape { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+.topo { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; }
+.marca { font-size: 24px; font-weight: 800; }
+
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; padding: 48px 0 32px; }
+h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 800; margin: 0 0 16px; }
+.hero-texto p { font-size: 19px; margin: 0 0 24px; }
+.dica { color: var(--suave); font-size: 15px !important; }
+
+.acoes { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.botao {
+  font: 700 18px "Nunito", sans-serif;
+  padding: 14px 26px;
+  border: 3px solid var(--texto);
+  border-radius: 999px;
+  background: var(--laranja);
+  color: var(--texto);
+  box-shadow: 0 5px 0 var(--texto);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .1s, box-shadow .1s;
+}
+.botao:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--texto); }
+.botao:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--texto); }
+.botao:focus-visible { outline: 4px solid var(--lago); outline-offset: 4px; }
+.botao.secundario { background: var(--cartao); }
+
+.palco {
+  background: radial-gradient(circle at 50% 55%, var(--areia) 0 60%, transparent 61%);
+  display: flex;
+  justify-content: center;
+}
+#capivara { width: min(100%, 380px); height: auto; cursor: pointer; overflow: visible; }
+.pp { transition: transform .08s linear; }
+
+/* a carinha feliz aparece quando a biblioteca liga mv-feliz */
+.boca-feliz { display: none; }
+.mv-feliz .boca { display: none; }
+.mv-feliz .boca-feliz { display: inline; }
+
+section { padding: 32px 0; }
+h2 { font-size: 34px; margin: 0 0 20px; }
+
+.cartoes { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cartoes li {
+  background: var(--cartao);
+  border: 3px solid var(--texto);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 5px 0 var(--texto);
+}
+.cartoes b { display: block; font: 800 24px "Baloo 2", sans-serif; color: var(--lago-escuro); }
+.nota { color: var(--suave); }
+
+code { background: var(--areia); padding: 2px 6px; border-radius: 6px; font-size: 15px; }
+pre {
+  background: var(--texto);
+  color: #fdf1df;
+  padding: 20px;
+  border-radius: 16px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+pre code { background: none; padding: 0; }
+
+.rodape { padding-top: 24px; padding-bottom: 40px; color: var(--suave); border-top: 2px dashed var(--areia); }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-top: 24px; }
+  .palco { order: -1; }
+  .cartoes { grid-template-columns: 1fr 1fr; }
+}

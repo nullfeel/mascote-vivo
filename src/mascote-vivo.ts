@@ -1,4 +1,4 @@
-import { deslocamentoPupila } from "./olhar";
+import { deslocamentoPupila } from "./olhar.js";
 
 export { deslocamentoPupila };
 
