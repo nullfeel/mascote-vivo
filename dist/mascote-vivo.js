@@ -7,6 +7,10 @@ export function darVida(svg, opcoes = {}) {
         return existente;
     const reduzido = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const gsap = opcoes.gsap ?? globalThis.gsap;
+    // As pálpebras são desenhadas por cima dos olhos: recolhe já, sem GSAP, para nunca ficarem fechadas.
+    const palpebras = Array.from(svg.querySelectorAll(".palpebra"));
+    for (const p of palpebras)
+        p.style.transform = "scaleY(0)";
     if (!gsap && !reduzido)
         throw new Error("mascote-vivo: carregue o GSAP antes de chamar darVida");
     const limpar = [];
@@ -28,7 +32,8 @@ export function darVida(svg, opcoes = {}) {
                 return;
             }
             gsap.killTweensOf(corpo);
-            gsap.to(corpo, { y: -10, rotation: 5, duration: 0.18, ease: "sine.inOut", yoyo: true, repeat: 3, transformOrigin: "50% 100%", onComplete: fimDaFesta });
+            // Keyframes que terminam em 0: se uma animação cortar outra, o corpo ainda volta ao lugar.
+            gsap.to(corpo, { keyframes: { y: [-10, 0, -10, 0], rotation: [5, 0, -5, 0] }, duration: 0.72, ease: "sine.inOut", transformOrigin: "50% 100%", onComplete: fimDaFesta });
         },
         parar() {
             limpar.forEach((fn) => fn());
@@ -53,7 +58,6 @@ export function darVida(svg, opcoes = {}) {
         return controle;
     limpar.push(() => gsap.killTweensOf(corpo));
     // Piscar: as pálpebras ficam recolhidas no topo e descem rapidinho, em intervalos aleatórios.
-    const palpebras = Array.from(svg.querySelectorAll(".palpebra"));
     if (palpebras.length) {
         gsap.set(palpebras, { scaleY: 0, transformOrigin: "50% 0%" });
         let piscada = 0;
@@ -92,7 +96,8 @@ export function darVida(svg, opcoes = {}) {
     }
     // Pular: clique ou toque.
     ouvir(svg, "pointerdown", () => {
-        gsap.to(corpo, { y: -14, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "50% 100%" });
+        gsap.killTweensOf(corpo);
+        gsap.to(corpo, { keyframes: { y: [-14, 0], rotation: [0, 0] }, duration: 0.3, ease: "power2.out", transformOrigin: "50% 100%", onComplete: fimDaFesta });
     });
     return controle;
 }

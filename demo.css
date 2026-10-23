@@ -94,3 +94,8 @@ pre code { background: none; padding: 0; }
   .palco { order: -1; }
   .cartoes { grid-template-columns: 1fr 1fr; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .botao, .pp { transition: none; }
+  .botao:hover, .botao:active { transform: none; }
+}
