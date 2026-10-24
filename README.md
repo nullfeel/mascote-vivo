@@ -3,7 +3,11 @@
 Dá vida a mascotes em SVG: eles olham para o mouse, piscam, pulam quando alguém toca e comemoram
 quando o mouse passa no botão principal.
 
-**[Ver demonstração](https://nullfeel.github.io/mascote-vivo/)**
+<p align="center">
+  <a href="https://nullfeel.github.io/mascote-vivo/"><img src="docs/capivara.gif" width="320" alt="Capivara olhando para o mouse, comemorando e pulando" /></a>
+</p>
+
+<p align="center"><b><a href="https://nullfeel.github.io/mascote-vivo/">Ver demonstração</a></b></p>
 
 Nasceu das animações do mascote que fiz para a [Prumo](https://estudeprumo.com). Este é código
 novo, com um mascote novo: uma capivara.
